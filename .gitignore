@@ -1,1 +1,6 @@
 .env
+app_old.py
+app_original.py
+analyze_old.py
+analyze_original.py
+/__pycache__
