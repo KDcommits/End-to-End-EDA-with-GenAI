@@ -6,6 +6,7 @@ import plotly.express as px
 import plotly.graph_objs as go
 from pathlib import Path
 from dotenv import load_dotenv
+from PIL import Image
 import os
 load_dotenv()
 from analyze import AnalyzeGPT, ChatGPT_Handler
@@ -41,11 +42,43 @@ def toggleSettings():
 openai.api_key =  os.getenv('OPENAI_API_KEY')
 gpt_engine = 'gpt-3.5-turbo'
 
-st.set_page_config(page_title="Natural Language Query", page_icon=":memo:", layout="wide")
+st.set_page_config(page_title="GenBI", page_icon=":memo:", layout="wide")
 col1, col2  = st.columns((3,1)) 
 
 with st.sidebar:  
-    options = ("SQL Query Writing Assistant", "Data Analysis Assistant")
+    custom_css_image = """
+    <style>
+            width: 90%;
+            margin-bottom:0px;
+        }
+    </style>
+    """
+    custom_css_h1 = """
+    <style>
+    h1 {
+        color: #FFF39F;
+        margin-top: 0;
+    }
+    </style>
+    """
+    custom_css_h5 = """
+    <style>
+    h5 {
+        color: #AAAAAA;
+        margin-top: 0;
+    }
+    </style>
+    """
+    st.markdown(custom_css_image, unsafe_allow_html=True)
+    image = Image.open('.\\image\\PwC Logo.png')
+    left_co, cent_co,last_co = st.columns(3)
+    with cent_co:
+        st.image(image , width=100,)
+    st.markdown(custom_css_h1, unsafe_allow_html=True)
+    st.markdown(custom_css_h5, unsafe_allow_html=True)
+    st.markdown('<h1 align="center">Generative BI</h1>', unsafe_allow_html=True)
+    st.markdown('<h5 align="center">©️PwC Advanced Analytics Team</h5>', unsafe_allow_html=True)
+    options = (["Data Analysis Assistant"])
     index = st.radio("Choose the app", range(len(options)), format_func=lambda x: options[x])
     system_message="""
         You are a smart AI assistant to help answer business questions based on analyzing data. 
@@ -108,7 +141,7 @@ with st.sidebar:
     if st.session_state['show_settings']:  
         # with st.expander("Settings",expanded=expandit):
         with st.form("AzureOpenAI"):
-            st.title("Azure OpenAI Settings")
+            st.markdown("<b>Azure OpenAI Settings</b>",  unsafe_allow_html=True)
             st.text_input("ChatGPT deployment name:", value=st.session_state.chatgpt,key="txtChatGPT")  
             st.form_submit_button("Submit",on_click=saveOpenAI)
 
@@ -125,5 +158,23 @@ with st.sidebar:
                               system_message=system_message, few_shot_examples=few_shot_examples,st=st)  
 
         analyzer.run(question,show_code,show_prompt, col1)  
-    else:
-        st.error("Not implemented yet!")
+    # else:
+    #     st.error("Not implemented yet!")
+    custom_css_footnote = """
+    <style>
+    .footnote {
+        font-size: 14px;
+        color: #777777;
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+    }
+    .footnote a {
+    text-decoration: none;
+    color: #AAAAAA;
+    }
+    </style>
+    """
+    st.markdown("<br>",unsafe_allow_html=True)
+    st.markdown(custom_css_footnote, unsafe_allow_html=True)
+    st.markdown('<div class="footnote">Developer: <a href="mailto:krishnendu.dey@pwc.com">Krishnendu Dey</a></div>', unsafe_allow_html=True)
