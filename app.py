@@ -12,10 +12,10 @@ load_dotenv()
 from analyze import AnalyzeGPT, ChatGPT_Handler
 
 
-# Only load the settings if they are running local and not in Azure
-if os.getenv('WEBSITE_SITE_NAME') is None:
-    env_path = Path('.') / 'secrets.env'
-    load_dotenv(dotenv_path=env_path)
+# # Only load the settings if they are running local and not in Azure
+# if os.getenv('WEBSITE_SITE_NAME') is None:
+#     env_path = Path('.') / 'secrets.env'
+#     load_dotenv(dotenv_path=env_path)
 
 def load_setting(setting_name, session_name,default_value=''):  
     """  
@@ -77,7 +77,7 @@ with st.sidebar:
     st.markdown(custom_css_h1, unsafe_allow_html=True)
     st.markdown(custom_css_h5, unsafe_allow_html=True)
     st.markdown('<h1 align="center">Generative BI</h1>', unsafe_allow_html=True)
-    st.markdown('<h5 align="center">©️PwC Advanced Analytics Team</h5>', unsafe_allow_html=True)
+    #st.markdown('<h5 align="center">©️PwC Advanced Analytics Team</h5>', unsafe_allow_html=True)
     options = (["Data Analysis Assistant"])
     index = st.radio("Choose the app", range(len(options)), format_func=lambda x: options[x])
     system_message="""
@@ -177,4 +177,4 @@ with st.sidebar:
     """
     st.markdown("<br>",unsafe_allow_html=True)
     st.markdown(custom_css_footnote, unsafe_allow_html=True)
-    st.markdown('<div class="footnote">Developer: <a href="mailto:krishnendu.dey@pwc.com">Krishnendu Dey</a></div>', unsafe_allow_html=True)
+    st.markdown('<div class="footnote">Developed by: <a href="mailto:krishnendu.dey@pwc.com">PwC Advanced Analytics Team</a></div>', unsafe_allow_html=True)
